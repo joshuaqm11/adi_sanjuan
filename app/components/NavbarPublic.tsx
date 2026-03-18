@@ -13,6 +13,7 @@ export default function NavbarPublic() {
 
         <div className="flex gap-6">
           <Link href="/">Inicio</Link>
+          <Link href="/historia">Historia</Link>
           <Link href="/reglamento">Reglamento</Link>
           <Link href="/cementerio">Cementerio</Link>
           <Link href="/contacto">Contacto</Link>
