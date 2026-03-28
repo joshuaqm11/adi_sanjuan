@@ -1,8 +1,24 @@
 import { Building2, Users, FileText, Phone } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { createClient } from '@supabase/supabase-js'
 
-export default function Inicio() {
+async function getLogoUrl(): Promise<string> {
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  )
+  const { data } = await supabase
+    .from('configuracion_sitio')
+    .select('url_logo')
+    .limit(1)
+    .single()
+  return data?.url_logo ?? ''
+}
+
+export default async function Inicio() {
+  const logoUrl = await getLogoUrl()
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
 
@@ -13,7 +29,11 @@ export default function Inicio() {
           {/* Logo */}
           <div className="flex justify-center mb-6">
             <div className="w-24 h-24 rounded-full overflow-hidden bg-white shadow-lg flex items-center justify-center border-4 border-blue-100">
-              <Image src="/Logo.jpeg" alt="Logo ADI" width={96} height={96} className="object-contain" />
+              {logoUrl ? (
+                <Image src={logoUrl} alt="Logo ADI" width={96} height={96} className="object-contain" />
+              ) : (
+                <div className="w-24 h-24 bg-blue-100 rounded-full" />
+              )}
             </div>
           </div>
 
@@ -118,7 +138,11 @@ export default function Inicio() {
       <footer className="bg-gray-800 text-white text-center py-6">
         <div className="flex justify-center items-center gap-3 mb-2">
           <div className="w-8 h-8 rounded-full overflow-hidden bg-white flex items-center justify-center">
-            <Image src="/Logo.jpeg" alt="Logo ADI" width={32} height={32} className="object-contain" />
+            {logoUrl ? (
+              <Image src={logoUrl} alt="Logo ADI" width={32} height={32} className="object-contain" />
+            ) : (
+              <div className="w-8 h-8 bg-gray-600 rounded-full" />
+            )}
           </div>
           <span className="font-semibold">ADI San Juan de Florencia</span>
         </div>
