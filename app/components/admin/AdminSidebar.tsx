@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useConfiguracion } from '@/app/hooks/useConfiguracion'
 import { LayoutDashboard, Map, Users, CreditCard, TrendingUp, Settings, Images, ShieldCheck, ClipboardList, UserCog } from 'lucide-react'
 
 const navItems = [
@@ -19,13 +20,18 @@ const navItems = [
 
 export default function AdminSidebar() {
   const pathname = usePathname()
+  const config = useConfiguracion()
 
   return (
     <aside className="w-64 bg-stone-900 text-stone-100 flex flex-col shrink-0">
       <div className="p-5 border-b border-stone-700">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-lg overflow-hidden flex items-center justify-center bg-white">
-            <img src="/Logo.jpeg" alt="Logo ADI" className="w-full h-full object-contain" />
+            {config?.url_logo ? (
+              <img src={config.url_logo} alt="Logo ADI" className="w-full h-full object-contain" />
+            ) : (
+              <div className="w-9 h-9 bg-stone-700 rounded-lg" />
+            )}
           </div>
           <div>
             <p className="text-xs font-semibold text-emerald-400 uppercase tracking-wider">Panel Admin</p>

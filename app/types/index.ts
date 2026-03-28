@@ -148,6 +148,7 @@ export interface ConfiguracionSitio {
   direccion: string
   descripcion_ubicacion: string
   actualizado_en: string
+  url_logo: string
 }
 
 export interface MiembroJunta {

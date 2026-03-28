@@ -2,15 +2,22 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
+import { useConfiguracion } from '@/app/hooks/useConfiguracion'
 
 export default function NavbarPublic() {
+  const config = useConfiguracion()
+
   return (
     <nav className="bg-blue-800 text-white p-4">
       <div className="max-w-6xl mx-auto flex justify-between items-center">
 
         <Link href="/" className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-lg overflow-hidden bg-white flex items-center justify-center shrink-0">
-            <Image src="/Logo.jpeg" alt="Logo ADI" width={40} height={40} className="object-contain" />
+            {config?.url_logo ? (
+              <Image src={config.url_logo} alt="Logo ADI" width={40} height={40} className="object-contain" />
+            ) : (
+              <div className="w-10 h-10 bg-blue-100 rounded-lg" />
+            )}
           </div>
           <span className="font-bold text-lg">ADI San Juan de Florencia</span>
         </Link>
